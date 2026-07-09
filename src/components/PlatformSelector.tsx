@@ -1,8 +1,13 @@
-import usePlatforms from "@/hooks/usePlatforms";
+import usePlatforms, { type Platform } from "@/hooks/usePlatforms";
 import { Button, Menu, Portal } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 
-const PlatformSelector = () => {
+interface Props {
+  onSelectPlatform: (platform: Platform) => void;
+  selectedPlatform: Platform | null;
+}
+
+const PlatformSelector = ({ onSelectPlatform, selectedPlatform }: Props) => {
   const { data, error } = usePlatforms();
 
   if (error) return null;
@@ -11,7 +16,7 @@ const PlatformSelector = () => {
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button variant="outline">
-          Platforms
+          {selectedPlatform?.name || "Platforms"}
           <BsChevronDown />
         </Button>
       </Menu.Trigger>
@@ -19,7 +24,11 @@ const PlatformSelector = () => {
         <Menu.Positioner>
           <Menu.Content>
             {data.map((platform) => (
-              <Menu.Item value={platform.name} key={platform.id}>
+              <Menu.Item
+                onClick={() => onSelectPlatform(platform)}
+                value={platform.name}
+                key={platform.id}
+              >
                 {platform.name}
               </Menu.Item>
             ))}
