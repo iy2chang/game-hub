@@ -17,6 +17,7 @@ interface Props {
 }
 
 const PlatformIconList = ({ platforms }: Props) => {
+  // missing atari, commodore-amiga
   const iconMap: { [key: string]: IconType } = {
     pc: FaWindows,
     playstation: FaPlaystation,
